@@ -5,10 +5,10 @@ const UserSchema= new mongoose.Schema({
     email:{type:String, required:true, unique:true},
     password:{type:String, required:true, select:false},
     role:{type:String, default:"user", enum:["admin", "user"], required:true},
-    profilePicture:{
+    profilePicture: profilePicture?{
         secure_url:{type:String},
         public_id:{type:String}
-    }
+    }:null
 }, {timestamps:true, strict:"throw"})
 
 const UserModel = mongoose.model("user", UserSchema)
