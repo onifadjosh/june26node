@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
     const saltround = 10;
     const hashedPassword = await bcryptjs.hash(password, saltround);
 
+    let image=null
 if(profilePicture){
       const image= await cloudinary.uploader.upload(profilePicture)
 }
