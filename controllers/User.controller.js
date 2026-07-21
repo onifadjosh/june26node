@@ -29,20 +29,25 @@ const registerUser = async (req, res) => {
 
     let image=null
 if(profilePicture){
-      const image= await cloudinary.uploader.upload(profilePicture)
+   image= await cloudinary.uploader.upload(profilePicture)
 }
 
-
-    const user = await UserModel.create({
-      firstName,
+let userToCreate= {
+  firstName,
       lastName,
       email,
       password: hashedPassword,
-      profilePicture:profilePicture?{
+}
+
+if (image){
+  userToCreate. profilePicture= {
         secure_url:image.secure_url,
         public_id:image.public_id
-      }:null
-    });
+      }
+}
+
+
+    const user = await UserModel.create(userToCreate);
 
     const token = await jwt.sign({ id: user._id }, process.env.AUTH_SECRET, {
       expiresIn: "5h",
